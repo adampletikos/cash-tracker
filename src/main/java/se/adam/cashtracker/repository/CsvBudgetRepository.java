@@ -15,6 +15,7 @@ import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Scanner;
 
 public class CsvBudgetRepository implements BudgetRepository{
     private final Path filePath;
@@ -25,11 +26,21 @@ public class CsvBudgetRepository implements BudgetRepository{
 
     @Override
     public void save(MonthlyBudget budget) {
+        List<MonthlyBudget> budgets = findAll();
+
+        int index = budgets.indexOf(budget);
+
+        if (index != -1) {
+            budgets.set(index, budget);
+        } else {
+            budgets.add(budget);
+        }
+
         try (BufferedWriter writer = Files.newBufferedWriter(filePath)) {
-            writer.write("month,budget,category");
+            writer.write("month,amount,category");
             writer.newLine();
-            for (MonthlyBudget budget : budget) {
-                writer.write(budget.toCsv());
+            for (MonthlyBudget b : budgets) {
+                writer.write(b.toCsv());
                 writer.newLine();
             }
         } catch (IOException e ) {

@@ -62,8 +62,8 @@ public class MonthlyBudget {
 
     NumberFormat formatter = NumberFormat.getNumberInstance(new Locale("sv", "SE"));
     public String formatted() {
-        return month + ", " +
-                category + ", " +
+        return month + " | " +
+                category + " | " +
                 formatter.format(amount) + "kr";
     }
 }
