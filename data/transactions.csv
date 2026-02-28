@@ -1,4 +1,4 @@
 id,date,type,category,amount,description
-fc4860f8-ad70-463b-a62b-ef20b460cfe4,2026-03-05,EXPENSE,GROCERIES,1200,ICA,Food shopping
-8f1eabb1-bd99-4582-a91c-e00a5ec3a80e,2026-03-12,EXPENSE,GROCERIES,800,Willys,More food
-07ddc7a9-0339-41b5-ad8a-271b6aebdc60,2026-03-15,INCOME,SALARY,25000,Company,Salary
+aa40b09a-c390-4090-b485-b3a0881b6fcc,2026-03-05,EXPENSE,GROCERIES,1200,ICA,Food shopping
+507ac954-cbcc-473d-af93-dce33b4d069a,2026-03-12,EXPENSE,GROCERIES,800,Willys,More food
+3c82a899-76ec-4581-b0a7-36ab3dadd156,2026-03-15,INCOME,SALARY,25000,Company,Salary

@@ -86,6 +86,10 @@ public class FinanceServices {
     }
 
     //Monthly budget
+    public void addBudget(MonthlyBudget budget) {
+        budgetRepository.save(budget);
+    }
+
     public BudgetComparison compareToBudget(Category category, YearMonth month ) {
         MonthlyBudget budget = budgetRepository
                 .findByCategoryAndMonth(category, month)

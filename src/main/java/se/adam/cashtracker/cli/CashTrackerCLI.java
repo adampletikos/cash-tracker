@@ -1,6 +1,7 @@
 package se.adam.cashtracker.cli;
 
 import se.adam.cashtracker.model.Category;
+import se.adam.cashtracker.model.MonthlyBudget;
 import se.adam.cashtracker.model.Transaction;
 import se.adam.cashtracker.model.TransactionType;
 import se.adam.cashtracker.service.FinanceServices;
@@ -38,7 +39,9 @@ public class CashTrackerCLI {
                 case "1" : addTransaction(); break;
                 case "2" : listTransactions(); break;
                 case "3" : monthlySpending(); break;
-                case "4": running = false; break;
+                case "4" : addBudget(); break;
+                case "5" : compareBudget(); break;
+                case "6": running = false; break;
                 default : System.out.println("Not an option");
             }
         }
@@ -50,7 +53,9 @@ public class CashTrackerCLI {
                 1. Add transaction
                 2. List transactions
                 3. Show monthly spending
-                4. Exit"""
+                4. Add a budget
+                5. Compare budget
+                6. Exit"""
         );
         System.out.print("Choose: ");
     }
@@ -106,6 +111,32 @@ public class CashTrackerCLI {
         }
     }
 
+    public void addBudget() {
+        YearMonth month = readMonth();
+        Category category = readCategory();
+        BigDecimal amount = readAmount();
+
+        service.addBudget(new MonthlyBudget(month, amount, category));
+    }
+
+    public void compareBudget() {
+        try {
+            YearMonth month = readMonth();
+            Category category = readCategory();
+
+            var comparison = service.compareToBudget(category, month);
+
+            System.out.println("\n==== Budget Report ====");
+            System.out.println("Budget: " + formatter.format(comparison.getBudget()) + " kr");
+            System.out.println("Spent: " + formatter.format(comparison.getSpent()) + " kr");
+            System.out.println("Remaining: " + formatter.format(comparison.getRemaining()) + " kr");
+            System.out.println("Percentage used: " +
+                    String.format("%.2f", comparison.getPercentageUsed()) + "%");
+            System.out.println("Over budget? " + comparison.isOverBudget());
+
+        } catch (IllegalArgumentException e) {System.out.println("Error " + e.getMessage());}
+    }
+
     private String readReference() {
         while (true) {
             System.out.print("Reference: ");
@@ -142,6 +173,15 @@ public class CashTrackerCLI {
                 System.out.print("Date (YYYY-MM-DD): ");
                 return LocalDate.parse(scanner.nextLine().trim());
             } catch (Exception e) {System.out.println("Invalid date format. Try again.");}
+        }
+    }
+
+    private YearMonth readMonth() {
+        while (true) {
+            try {
+                System.out.println("Month (YYYY-MM)");
+                return YearMonth.parse(scanner.nextLine().trim());
+            } catch (Exception e) {System.out.println("Invalid year-month format. Try again.");}
         }
     }
 

@@ -59,8 +59,8 @@ public class Transaction {
             throw new IllegalArgumentException("Category cannot be empty");
         if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0)
             throw new IllegalArgumentException("Amount must be positive");
-        if (description == null)
-            throw new IllegalArgumentException("Reference must be provided");
+        if (description == null || description.isBlank())
+            throw new IllegalArgumentException("Description must be provided");
         if (reference == null || reference.isBlank()) {
             throw new IllegalArgumentException("Reference cannot be empty");
         }
