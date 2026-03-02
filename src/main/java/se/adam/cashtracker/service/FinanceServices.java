@@ -86,8 +86,8 @@ public class FinanceServices {
     }
 
     //Monthly budget
-    public void addBudget(MonthlyBudget budget) {
-        budgetRepository.save(budget);
+    public boolean addBudget(MonthlyBudget budget) {
+        return budgetRepository.save(budget);
     }
 
     public BudgetComparison compareToBudget(Category category, YearMonth month ) {
@@ -110,5 +110,9 @@ public class FinanceServices {
         }
 
         return new BudgetComparison(budget.getAmount(), spent);
+    }
+
+    public List<MonthlyBudget> getAllBudgets() {
+        return budgetRepository.findAll();
     }
 }

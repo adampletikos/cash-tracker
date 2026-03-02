@@ -41,7 +41,8 @@ public class CashTrackerCLI {
                 case "3" : monthlySpending(); break;
                 case "4" : addBudget(); break;
                 case "5" : compareBudget(); break;
-                case "6": running = false; break;
+                case "6" : listBudgets(); break;
+                case "7": running = false; break;
                 default : System.out.println("Not an option");
             }
         }
@@ -55,7 +56,8 @@ public class CashTrackerCLI {
                 3. Show monthly spending
                 4. Add a budget
                 5. Compare budget
-                6. Exit"""
+                6. List all budgets
+                7. Exit"""
         );
         System.out.print("Choose: ");
     }
@@ -116,7 +118,11 @@ public class CashTrackerCLI {
         Category category = readCategory();
         BigDecimal amount = readAmount();
 
-        service.addBudget(new MonthlyBudget(month, amount, category));
+        boolean overwritten = service.addBudget(new MonthlyBudget(month, amount, category));
+
+        if (overwritten) {
+            System.out.println("Budget was overwritten");
+        } else {System.out.println("Budget was added successfully");}
     }
 
     public void compareBudget() {
@@ -135,6 +141,14 @@ public class CashTrackerCLI {
             System.out.println("Over budget? " + comparison.isOverBudget());
 
         } catch (IllegalArgumentException e) {System.out.println("Error " + e.getMessage());}
+    }
+
+    public void listBudgets() {
+        List<MonthlyBudget> budgets = service.getAllBudgets();
+
+        for (MonthlyBudget b : budgets) {
+            System.out.println(b.formatted());
+        }
     }
 
     private String readReference() {

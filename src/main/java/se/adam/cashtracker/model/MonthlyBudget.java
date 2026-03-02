@@ -46,7 +46,7 @@ public class MonthlyBudget {
         if (this == o) {return true;}
         if (!(o instanceof MonthlyBudget)) {return false;}
         MonthlyBudget that = (MonthlyBudget) o;
-        return month.equals(that.month) && amount.equals(that.amount);
+        return month.equals(that.month) && category.equals(that.category);
     }
 
     @Override

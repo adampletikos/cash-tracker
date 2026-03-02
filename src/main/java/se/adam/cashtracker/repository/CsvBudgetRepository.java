@@ -25,13 +25,15 @@ public class CsvBudgetRepository implements BudgetRepository{
     }
 
     @Override
-    public void save(MonthlyBudget budget) {
+    public boolean save(MonthlyBudget budget) {
         List<MonthlyBudget> budgets = findAll();
+        boolean overwritten = false;
 
         int index = budgets.indexOf(budget);
 
         if (index != -1) {
             budgets.set(index, budget);
+            overwritten = true;
         } else {
             budgets.add(budget);
         }
@@ -46,6 +48,7 @@ public class CsvBudgetRepository implements BudgetRepository{
         } catch (IOException e ) {
             throw new RuntimeException("Failed to save budget");
         }
+        return overwritten;
     }
 
     @Override

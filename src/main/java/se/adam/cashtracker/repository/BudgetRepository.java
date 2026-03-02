@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface BudgetRepository {
-    void save(MonthlyBudget budget);
+    boolean save(MonthlyBudget budget);
 
     Optional<MonthlyBudget> findByCategoryAndMonth(Category category, YearMonth month);
 
